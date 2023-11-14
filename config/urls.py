@@ -19,14 +19,29 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from rest_framework.routers import SimpleRouter 
 from apps.freelancer.views import FreelancerViewSet
+from django.conf import settings 
+from drf_yasg import openapi 
+from drf_yasg.views import get_schema_view
 
 router = SimpleRouter()
 router.register('freelancer', FreelancerViewSet)
 
-
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Blog API",
+        default_version='v1',
+        description="Try not to laugh"
+    ),
+    public=True,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('docs/', schema_view.with_ui("swagger")),
     path('api/v1/freelancer/', include('apps.freelancer.urls')),
     path('api/v1/', include(router.urls)),
 ]
+
+urlpatterns += static(
+    settings.MEDIA_URL, document_root = settings.MEDIA_ROOT
+)

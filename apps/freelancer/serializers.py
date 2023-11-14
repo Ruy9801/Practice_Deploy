@@ -4,18 +4,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-# first_name = models.CharField(max_length=50)
-#     last_name = models.CharField(max_length=50)
-#     birth_date = models.DateField(default=date(1990, 1, 1))
-#     avatar = models.ImageField(upload_to='avatars/', blank=True)
-
-
-#     profession = models.CharField(max_length=90)
-#     what_i_can = models.TextField()
-#     price = models.DecimalField(max_digits=10, decimal_places=2, default=2.00)
-#     work_time = models.TimeField(validators=[MinValueValidator(0), MaxValueValidator(99)], default='00:30')
-#     city = models.CharField(max_length=150)
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=6, max_length=20, required=True, write_only=True)
