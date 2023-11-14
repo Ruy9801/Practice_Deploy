@@ -36,12 +36,6 @@ class RegistrationView(APIView):
         return Response(serialier.data, status=201)
     
 
-# class UserListView(ListAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = (permissions.AllowAny,)
-
-
 
 class ActivationView(APIView):
     def get(self, request):
