@@ -100,7 +100,10 @@ class FreelancerViewSet(ModelViewSet):
         serializer.save(owner=self.request.user)
 
     def get_permissions(self):
+<<<<<<< HEAD
         print(self.request.user)
+=======
+>>>>>>> 1197d5402ca665d1214941dd2aa1f8309592546e
         if self.action in ['update', 'partial_update', 'destroy']:
             return [IsAuthenticated(), IsAuthor()]
         return [IsAuthenticatedOrReadOnly()]    

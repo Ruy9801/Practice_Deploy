@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -27,3 +28,8 @@ class CustomerCompanyViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['DELETE'])
     def delete_company(self, request, pk=None):
         return self.destroy(request, pk)
+=======
+from django.shortcuts import render
+
+# Create your views here.
+>>>>>>> 1197d5402ca665d1214941dd2aa1f8309592546e
