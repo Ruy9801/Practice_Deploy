@@ -47,7 +47,9 @@ class Freelancer(AbstractUser):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=2.00)
     work_time = models.TimeField(validators=[MinValueValidator(0), MaxValueValidator(99)], default='00:30')
     city = models.CharField(max_length=150)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     username = None
+    company_name = None
 
     activation_code = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=False)
