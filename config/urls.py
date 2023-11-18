@@ -21,6 +21,7 @@ from rest_framework.routers import SimpleRouter
 from apps.freelancer.views import FreelancerViewSet
 from apps.customer.views import CustomerViewSet
 from apps.customer_company.views import CustomerCompanyViewSet
+from apps.order.views import OrderViewSet
 from django.conf import settings 
 from drf_yasg import openapi 
 from drf_yasg.views import get_schema_view
@@ -29,10 +30,11 @@ router = SimpleRouter()
 router.register('freelancer', FreelancerViewSet)
 router.register('customer', CustomerViewSet)
 router.register('cust_comp', CustomerCompanyViewSet)
+router.register('order', OrderViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Blog API",
+        title="Project API",
         default_version='v1',
         description="Try not to laugh"
     ),

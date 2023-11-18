@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Permission, Group
 from datetime import date
 
 class UserManager(BaseUserManager):
@@ -50,6 +50,24 @@ class Freelancer(AbstractUser):
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     username = None
     company_name = None
+    groups = models.ManyToManyField(
+        Group,
+        related_name='freelancer_users',
+        blank=True,
+        verbose_name='groups',
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name='freelancer_users',
+        blank=True,
+        verbose_name='user permissions',
+        help_text='Specific permissions for this user.',
+        error_messages={
+            'add': 'You cannot add permission directly to users. Use groups instead.',
+            'remove': 'You cannot remove permission directly from users. Use groups instead.',
+        },
+    )
 
     activation_code = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=False)

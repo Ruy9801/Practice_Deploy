@@ -13,7 +13,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
         fields = ('balance', 'birth_date','what_i_can', 'price', 'work_time', 'city', 'email', 'password', 'password_confirm', 'last_name', 'first_name', 'avatar', 'phone_number')
-
+        ref_name = 'FreelancerUserSerializer'
 
     def validate(self, attrs):
         password = attrs['password']
@@ -39,3 +39,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
         exclude = ('password', )
+        ref_name = 'FreelancerUserSerializer'
+        
+

@@ -4,7 +4,6 @@ from rest_framework import permissions
 from .serializers import RegisterSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
-from django.contrib.auth import get_user_model
 from .send_mail import send_confirmation_email
 from .send_sms import send_activation_sms
 from django.shortcuts import get_object_or_404
@@ -16,8 +15,8 @@ from .permissions import IsAuthor
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from .models import Customer
 
-User = get_user_model()
 
 class RegistrationView(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -38,7 +37,7 @@ class RegistrationView(APIView):
 class ActivationView(APIView):
     def get(self, request):
         code = request.GET.get('u')
-        user = get_object_or_404(User, activation_code=code)
+        user = get_object_or_404(Customer, activation_code=code)
         user.is_active = True 
         user.activation_code = ''
         user.save()
@@ -64,7 +63,7 @@ class ActivationPhoneView(APIView):
     def post(self, request):
         phone = request.data.get('phone_number')
         code = request.data.get('activation_code')
-        user = User.objects.filter(phone_number=phone, activation_code=code).first()
+        user = Customer.objects.filter(phone_number=phone, activation_code=code).first()
         if not user:
             return Response('No such user', status=400)
         user.activation_code = ''
@@ -81,12 +80,12 @@ class StandartPagination(PageNumberPagination):
 
 
 class CustomerViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    queryset = Customer.objects.all()
     serializer_class = UserSerializer 
     pagination_class = StandartPagination 
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('balance', )
-    filterset_fields = ('balance')
+    filterset_fields = ('balance', )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

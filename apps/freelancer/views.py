@@ -88,7 +88,7 @@ class FreelancerViewSet(ModelViewSet):
     pagination_class = StandartPagination 
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('profession', )
-    filterset_fields = ('profession', 'price', 'city')
+    filterset_fields = ('profession', 'price', 'city', )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

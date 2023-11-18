@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager 
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
 class UserManager(BaseUserManager):
@@ -28,7 +29,7 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **kwargs)
 
 
-class CustomerCompany(models.Model):
+class CustomerCompany(AbstractUser):
 
     company_name = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
@@ -38,7 +39,25 @@ class CustomerCompany(models.Model):
 
     is_active = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=255, blank=True)
-
+    username = None 
+    groups = models.ManyToManyField(
+        Group,
+        related_name='customer_company_users',  
+        blank=True,
+        verbose_name='groups',
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name='customer_company_users',
+        blank=True,
+        verbose_name='user permissions',
+        help_text='Specific permissions for this user.',
+        error_messages={
+            'add': 'You cannot add permission directly to users. Use groups instead.',
+            'remove': 'You cannot remove permission directly from users. Use groups instead.',
+        },
+    )
 
     objects = UserManager()
 

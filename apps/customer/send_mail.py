@@ -6,7 +6,7 @@ from time import sleep
 
 @shared_task()
 def send_confirmation_email(email, code):
-    activation_url = f'http://localhost:8000/api/v1/freelancer/activate/?u={code}'
+    activation_url = f'http://localhost:8000/api/v1/customer/activate/?u={code}'
     # sleep(6)
     send_mail(
         'Активируйте ваш аккаунт!',

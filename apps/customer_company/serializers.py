@@ -1,8 +1,6 @@
 from rest_framework import serializers 
 from django.contrib.auth import get_user_model 
-
-
-User = get_user_model()
+from .models import CustomerCompany
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -11,9 +9,9 @@ class RegisterSerializer(serializers.ModelSerializer):
     phone_number = serializers.CharField(required=True)
     
     class Meta:
-        model = User 
+        model = CustomerCompany 
         fields = ('balance', 'email', 'password', 'password_confirm', 'company_name', 'phone_number')
-
+        ref_name = 'CutomerCompanyUserSerializer'
 
     def validate(self, attrs):
         password = attrs['password']
@@ -30,12 +28,13 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
     
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        user = CustomerCompany.objects.create_user(**validated_data)
         return user
     
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User 
+        model = CustomerCompany 
         exclude = ('password', )
+        ref_name = 'CutomerCompanyUserSerializer'
