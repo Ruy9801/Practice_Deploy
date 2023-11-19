@@ -6,5 +6,5 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order 
-        fields = '__all__'
+        fields = ('freelancer', 'customer', 'company_name', 'created_at', 'finished_at', 'images', 'price', 'description')
 

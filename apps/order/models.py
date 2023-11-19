@@ -8,8 +8,8 @@ class Order(models.Model):
 
     freelancer = models.ForeignKey(Freelancer, related_name='orders', on_delete=models.CASCADE)
 
-    customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
-    company_name = models.ForeignKey(CustomerCompany, related_name='orders', on_delete=models.CASCADE, default=None)
+    customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE, blank=True, null=True)
+    company_name = models.ForeignKey(CustomerCompany, related_name='orders', on_delete=models.CASCADE, blank=True, null=True)
 
     description = models.TextField(blank=True, null=True)
     images = models.ImageField(upload_to='descr_images/', blank=True, null=True)
