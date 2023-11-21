@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 from .serializers import RegisterSerializer, UserSerializer
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView, GenericAPIView
+from rest_framework.generics import GenericAPIView
 from django.contrib.auth import get_user_model
 from .send_mail import send_confirmation_email
 from .send_sms import send_activation_sms
@@ -17,7 +17,6 @@ from .permissions import IsAuthor
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Freelancer
 
 User = get_user_model()
 
