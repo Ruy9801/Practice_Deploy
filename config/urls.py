@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 from rest_framework.routers import SimpleRouter 
 from apps.freelancer.views import FreelancerViewSet
 from apps.customer.views import CustomerViewSet
-from apps.customer_company.views import CustomerCompanyViewSet
 from apps.order.views import OrderViewSet
 from django.conf import settings 
 from drf_yasg import openapi 
@@ -29,7 +28,6 @@ from drf_yasg.views import get_schema_view
 router = SimpleRouter()
 router.register('freelancer', FreelancerViewSet)
 router.register('customer', CustomerViewSet)
-router.register('cust_comp', CustomerCompanyViewSet)
 router.register('order', OrderViewSet)
 
 schema_view = get_schema_view(
@@ -46,7 +44,6 @@ urlpatterns = [
     path('docs/', schema_view.with_ui("swagger")),
     path('api/v1/freelancer/', include('apps.freelancer.urls')),
     path('api/v1/customer/', include('apps.customer.urls')),
-    path('api/v1/cust_comp/', include('apps.customer_company.urls')),
     path('api/v1/', include(router.urls)),
 ]
 

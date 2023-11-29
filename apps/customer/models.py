@@ -35,6 +35,7 @@ class Customer(AbstractUser):
     password = models.CharField(max_length=200)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    company_name = models.CharField(max_length=150, blank=True, null=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     is_active = models.BooleanField(default=False)
@@ -65,9 +66,13 @@ class Customer(AbstractUser):
     REQUIRED_FIELDS = []
 
     def __str__(self) -> str:
-        return f'{self.first_name} {self.last_name} --> {self.balance}'
-    
+        if not self.company_name:
+            return f'id={self.id} ({self.first_name} {self.last_name} - {self.balance})'
+        else:
+            return f'id={self.id} ({self.company_name} - {self.balance})'
+
     def create_activation_code(self):
         import uuid 
         code = str(uuid.uuid4())
         self.activation_code = code
+        

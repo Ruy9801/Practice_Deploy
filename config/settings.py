@@ -47,9 +47,9 @@ INSTALLED_APPS = [
 
     #apps
     'apps.customer',
-    'apps.customer_company',
     'apps.freelancer',
     'apps.order',
+    'apps.feedback',
 ]
 
 MIDDLEWARE = [
@@ -139,7 +139,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'freelancer.Freelancer'
+AUTH_USER_MODEL = 'customer.Customer'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'

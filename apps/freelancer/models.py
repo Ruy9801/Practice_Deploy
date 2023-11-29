@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password 
 from django.contrib.auth.models import AbstractUser, Permission, Group
@@ -45,11 +44,12 @@ class Freelancer(AbstractUser):
     profession = models.CharField(max_length=90, default='self-taught')
     what_i_can = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, default=2.00)
-    work_time = models.TimeField(validators=[MinValueValidator(0), MaxValueValidator(99)], default='00:30')
+    work_time = models.TimeField(default='00:30')
     city = models.CharField(max_length=150)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     username = None
     company_name = None
+
     groups = models.ManyToManyField(
         Group,
         related_name='freelancer_users',
@@ -84,7 +84,7 @@ class Freelancer(AbstractUser):
                 raise ValidationError({'birth_date': "Пользователь должен быть старже 18 лет."})
             
     def __str__(self) -> str:
-        return f'{self.first_name} {self.last_name} --> {self.profession}'
+        return f'id={self.id} ({self.first_name} {self.last_name} - {self.profession})'
     
     def create_activation_code(self):
         import uuid 

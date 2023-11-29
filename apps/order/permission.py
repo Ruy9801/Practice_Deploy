@@ -7,3 +7,6 @@ class IsAuthor(BasePermission):
         return request.user.email == obj.email and request.user.password == obj.password or request.user.is_superuser is True
 
 
+class IsFreelancer(BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.is_authenticated and hasattr(request.user, 'freelancer')

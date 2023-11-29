@@ -7,6 +7,7 @@ from .permission import IsAuthor
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from django.core.exceptions import PermissionDenied
 import logging 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +27,10 @@ class OrderViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         logger.info(self.request.user)
-        serializer.save(freelancer=self.request.user)
+        if hasattr(self.request.user, 'freelancer'):
+            raise PermissionDenied("You don't have permission to create an order.")
+
+        serializer.save(customer=self.request.user)
 
     def get_permissions(self):
         if self.action in ['update', 'partial_update', 'destroy']:
